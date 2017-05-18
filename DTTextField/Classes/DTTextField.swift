@@ -217,7 +217,7 @@ public class DTTextField: UITextField {
         lblError.isHidden = false
         let boundWithPadding = CGSize(width: bounds.width - (x * 2), height: bounds.height)
         let errorLabelSize =  lblError.sizeThatFits(boundWithPadding)
-        lblError.frame = CGRect(x: paddingX, y: dtLayer.frame.maxY + 1, width: errorLabelSize.width, height: errorLabelSize.height)
+        lblError.frame = CGRect(x: paddingX, y: dtLayer.frame.maxY + paddingYErrorLabel, width: errorLabelSize.width, height: errorLabelSize.height)
         invalidateIntrinsicContentSize()
     }
     
