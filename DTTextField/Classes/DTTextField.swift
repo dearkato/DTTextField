@@ -217,7 +217,7 @@ public class DTTextField: UITextField {
         lblError.isHidden = false
         let boundWithPadding = CGSize(width: bounds.width - (x * 2), height: bounds.height)
         let errorLabelSize =  lblError.sizeThatFits(boundWithPadding)
-        lblError.frame = CGRect(x: paddingX, y: 0, width: errorLabelSize.width, height: errorLabelSize.height)
+        lblError.frame = CGRect(x: paddingX, y: dtLayer.frame.maxY + 1, width: errorLabelSize.width, height: errorLabelSize.height)
         invalidateIntrinsicContentSize()
     }
     
@@ -343,7 +343,7 @@ public class DTTextField: UITextField {
     fileprivate func insetForSideView(forBounds bounds: CGRect) -> CGRect{
         var rect = bounds
         rect.origin.y = 0
-        rect.size.height = dtLayerHeight
+        rect.size.height = dtLayerMinY
         return rect
     }
     
@@ -359,7 +359,7 @@ public class DTTextField: UITextField {
     
     override public func clearButtonRect(forBounds bounds: CGRect) -> CGRect {
         var rect = super.clearButtonRect(forBounds: bounds)
-        rect.origin.y = (dtLayerHeight - rect.size.height) / 2
+        rect.origin.y = (dtLayerMinY - rect.size.height) / 2
         return rect
     }
     
@@ -377,7 +377,7 @@ public class DTTextField: UITextField {
         if showErrorLabel {
             
             var lblErrorFrame = lblError.frame
-            lblErrorFrame.origin.y = dtLayer.frame.origin.y + dtLayer.frame.size.height + paddingYErrorLabel
+            lblErrorFrame.origin.y = dtLayer.frame.maxY + paddingYErrorLabel
             lblError.frame = lblErrorFrame
         }
         
