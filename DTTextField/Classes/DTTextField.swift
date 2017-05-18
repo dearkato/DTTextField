@@ -5,7 +5,6 @@
 //  Created by Dhaval Thanki on 03/04/17.
 //
 //
-
 import Foundation
 import UIKit
 
@@ -90,7 +89,11 @@ public class DTTextField: UITextField {
     }
     
     fileprivate var dtLayerHeight:CGFloat{
-        return showErrorLabel ? floor(bounds.height - lblError.bounds.size.height - paddingYErrorLabel) : bounds.height
+        return 1//showErrorLabel ? floor(bounds.height - lblError.bounds.size.height - paddingYErrorLabel) : bounds.height
+    }
+    
+    fileprivate var dtLayerMinY:CGFloat{
+        return showErrorLabel ? floor(bounds.height - lblError.bounds.size.height - paddingYErrorLabel - dtLayerHeight) : bounds.height - dtLayerHeight
     }
     
     fileprivate var floatLabelWidth:CGFloat{
@@ -169,7 +172,10 @@ public class DTTextField: UITextField {
     
     public func showError(message:String? = nil) {
         if let msg = message { errorMessage = msg }
+        guard !errorMessage.isEmptyStr else { return }
+        showErrorMessage()
         showErrorLabel = true
+        
     }
     
     public func hideError()  {
@@ -178,10 +184,10 @@ public class DTTextField: UITextField {
     
     fileprivate func commonInit() {
         
-        dtLayer.cornerRadius        = 4.5
-        dtLayer.borderWidth         = 0.5
-        dtLayer.borderColor         = borderColor.cgColor
-        dtLayer.backgroundColor     = UIColor.white.cgColor
+//        dtLayer.cornerRadius        = 4.5
+//        dtLayer.borderWidth         = 0.5
+//        dtLayer.borderColor         = borderColor.cgColor
+//        dtLayer.backgroundColor     = UIColor.white.cgColor
         
         floatPlaceholderColor       = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0)
         floatPlaceholderActiveColor = tintColor
@@ -363,7 +369,7 @@ public class DTTextField: UITextField {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         dtLayer.frame = CGRect(x: bounds.origin.x,
-                               y: bounds.origin.y,
+                               y: dtLayerMinY,
                                width: bounds.width,
                                height: dtLayerHeight)
         CATransaction.commit()
@@ -382,6 +388,7 @@ public class DTTextField: UITextField {
                                            height: floatingLabelSize.height)
         
         lblFloatPlaceholder.textColor = isFirstResponder ? floatPlaceholderActiveColor : floatPlaceholderColor
+        dtLayer.backgroundColor = isFirstResponder ? floatPlaceholderActiveColor.cgColor : floatPlaceholderColor.cgColor
         
         switch floatingDisplayStatus {
         case .never:
