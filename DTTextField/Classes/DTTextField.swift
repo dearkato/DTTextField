@@ -201,8 +201,10 @@ public class DTTextField: UITextField {
         lblError.frame              = CGRect.zero
         lblError.font               = errorFont
         lblError.textColor          = UIColor.red
-        lblError.numberOfLines      = 0
+        lblError.numberOfLines      = 2
         lblError.isHidden           = true
+        lblError.minimumScaleFactor = 0.5
+        lblError.adjustsFontSizeToFitWidth = true
         
         addTarget(self, action: #selector(textFieldTextChanged), for: .editingChanged)
         
@@ -288,7 +290,7 @@ public class DTTextField: UITextField {
     
     fileprivate func insetRectForBounds(rect:CGRect) -> CGRect {
         
-        guard !lblFloatPlaceholder.text!.isEmptyStr else { return insetRectForEmptyBounds(rect: rect) }
+        guard !(lblFloatPlaceholder.text ?? "").isEmptyStr else { return insetRectForEmptyBounds(rect: rect) }
         
         if floatingDisplayStatus == .never {
             return insetRectForEmptyBounds(rect: rect)
