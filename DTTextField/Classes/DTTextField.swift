@@ -15,7 +15,7 @@ public extension String {
     }
 }
 
-public class DTTextField: UITextField {
+open class DTTextField: UITextField {
     
     public enum FloatingDisplayStatus{
         case always
@@ -71,7 +71,7 @@ public class DTTextField: UITextField {
         didSet{
             guard let color = placeholderColor else { return }
             attributedPlaceholder = NSAttributedString(string: placeholderFinal,
-                                                       attributes: [NSForegroundColorAttributeName:color])
+                                                       attributes: [NSAttributedStringKey.foregroundColor:color])
         }
     }
     
@@ -152,7 +152,7 @@ public class DTTextField: UITextField {
                 return
             }
             attributedPlaceholder = NSAttributedString(string: placeholderFinal,
-                                                       attributes: [NSForegroundColorAttributeName:color])
+                                                       attributes: [NSAttributedStringKey.foregroundColor:color])
         }
     }
     
